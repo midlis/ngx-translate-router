@@ -1,6 +1,6 @@
 import {
   Router, UrlSerializer, ChildrenOutletContexts, Routes,
-  Route, ExtraOptions, UrlHandlingStrategy, RouteReuseStrategy, RouterEvent, LoadChildren, ROUTES
+  Route, ExtraOptions, UrlHandlingStrategy, RouteReuseStrategy, RouterEvent, LoadChildren, ROUTES, TitleStrategy
 } from '@angular/router';
 import { Type, Injector, Compiler, ApplicationRef, NgModuleFactory, PLATFORM_ID } from '@angular/core';
 import { Location, isPlatformBrowser } from '@angular/common';
@@ -72,6 +72,9 @@ export function setupRouter(
     routeReuseStrategy?: RouteReuseStrategy) {
   const router = new LocalizedRouter(
       null, urlSerializer, contexts, location, injector, compiler, flatten(config), localize);
+
+  const titleStrategy = injector.get(TitleStrategy);
+  router.titleStrategy = titleStrategy;
 
   if (urlHandlingStrategy) {
     router.urlHandlingStrategy = urlHandlingStrategy;
